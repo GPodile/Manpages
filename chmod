@@ -1,0 +1,90 @@
+## chmod - Change File Modes
+
+NAME
+    chmod - change the access permissions of file(s) and directory(ies)
+
+SYNOPSIS
+    chmod [OPTION]... MODE FILE...
+
+DESCRIPTION
+    The chmod command is used to change the permissions of files and directories. Permissions determine who can read, write, or execute a file.
+
+    Permissions are represented in three sets:
+    - Owner (the person who created the file)
+    - Group (users in the same group as the owner)
+    - Others (everyone else)
+
+    Each set of permissions can be specified using either symbolic notation (e.g., u+r) or numeric notation (e.g., 755).
+
+OPTIONS
+
+    -R, --recursive
+        Recursively change permissions of directories and their contents.
+
+        Example:
+           # chmod -R 755 mydir
+            This command sets the permissions of mydir and all files and subdirectories within it to 755.
+
+    --reference=RFILE
+        Set permissions of the target file(s) to be the same as those of RFILE.
+
+        Example:
+            #chmod --reference=example.txt targetfile.txt
+            This command sets the permissions of targetfile.txt to match those of example.txt.
+
+    MODE
+        The mode defines the new permissions. You can specify modes in two ways:
+
+        Symbolic Mode
+            - u: User (owner)
+            - g: Group
+            - o: Others
+            - a: All (u+g+o)
+            - +: Add permission
+            - -: Remove permission
+            - =: Set exact permission
+
+            Examples:
+                Add read permission for the user:
+                    # chmod u+r file.txt
+                Remove write permission for the group:
+                    # chmod g-w file.txt
+                Set exact permissions for others:
+                    #chmod o=rx file.txt
+
+        Numeric Mode
+            Use a three-digit number where each digit represents permissions for user, group, and others respectively. Each digit is the sum of:
+            - 4: Read (r)
+            - 2: Write (w)
+            - 1: Execute (x)
+
+            Examples:
+                Set permissions to read, write, and execute for the owner; read and execute for group and others:
+                    chmod 755 file.txt
+                Set permissions to read and write for everyone:
+                    chmod 666 file.txt
+                Set permissions to read, write, and execute for owner, and read and execute for group and others:
+                    chmod 755 myscript.sh
+
+EXAMPLES
+
+    Make a script executable:
+        # chmod +x script.sh
+        This adds execute permission for everyone.
+
+    Set permissions for a directory and its contents:
+        # chmod -R 700 mydir
+        This sets read, write, and execute permissions for the owner only.
+
+    Remove read permission for others:
+        # chmod o-r file.txt
+
+    Set exact permissions using numeric mode:
+        #chmod 644 file.txt
+        This sets read and write permissions for the owner and read-only for group and others.
+
+SEE ALSO
+    chown(1), ls(1)
+
+AUTHOR
+    Written by [Your Name].
