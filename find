@@ -1,0 +1,150 @@
+# FIND(1) Manual Page
+
+## NAME
+	find - search for files and directories in a directory hierarchy
+
+## SYNOPSIS
+	find <path> <expression>
+
+## DESCRIPTION
+The `find` command recursively searches through directories to locate files and directories that match specified criteria. It is highly versatile and can be used for a variety of file searching tasks based on name, type, size, modification time, and other attributes.
+
+## OPTIONS
+Here is a list of commonly used options with `find`, along with their descriptions and examples:
+
+### Basic Options
+
+- path
+  The starting directory or directories where `find` begins its search. If no path is provided, `find` defaults to the current directory (`.`).
+
+### Expressions
+
+  -name pattern  
+  Search for files that match the specified name pattern. The pattern can include wildcard characters (`*`, `?`, `[]`).
+
+  Example:  
+	# find /home/user -name "*.txt"  
+  Finds all `.txt` files in the `/home/user` directory.
+
+  -iname pattern 
+  Search for files that match the specified name pattern, case-insensitively.
+
+  Example:  
+	# find /home/user -iname "*.jpg"  
+  Finds all `.jpg` files in `/home/user`, regardless of case.
+
+  -type <type>  
+  Search for files of a specified type. Valid types include:
+  - `f` - regular file
+  - `d` - directory
+  - `l` - symbolic link
+
+   Example:  
+	# find /home/user -type d  
+  Finds all directories in `/home/user`.
+
+  -size [+/-]N[c] 
+  Search for files of a specified size. `N` is the size in 512-byte blocks by default, but can be specified in bytes (c) or kilobytes (k), megabytes (M), or gigabytes (G). Prefix `+` or `-` to find files larger or smaller than `N`.
+
+  Example:  
+	# find /var/log -size +100M  
+  Finds files larger than 100 megabytes in `/var/log`.
+
+  -mtime [+/-]N  
+  Search for files modified `N` days ago. Prefix `+` or `-` to find files modified more than or less than `N` days ago.
+
+  Example:  
+	# find /tmp -mtime -7  
+  Finds files modified in the last 7 days in `/tmp`.
+
+ -exec command {} \; 
+  Execute a command on each file found. `{}` is replaced by the current file name. `\;` marks the end of the command.
+
+  Example:  
+  # find /home/user -name "*.log" -exec rm {} \;`  
+  Deletes all `.log` files in `/home/user`.
+
+-print  
+  Print the path of each file found. This is the default action if no other actions are specified.
+
+  
+Example:  
+	# find /home/user -name "*.pdf" -print  
+  Prints the paths of all `.pdf` files in `/home/user`.
+
+### Logical Operators
+
+-and  
+  Logical AND between two expressions. This is the default operator between expressions.
+
+  Example:  
+  # find /home/user -type f -and -name "*.txt"  
+  Finds all `.txt` files.
+
+-or  
+  Logical OR between two expressions.
+
+  Example:  
+  # find /home/user -name "*.txt" -or -name "*.md"  
+  Finds files with either `.txt` or `.md` extensions.
+
+-not  
+  Logical NOT for negating an expression.
+
+  Example:  
+  # find /home/user -not -name "*.bak"  
+  Finds all files that do not have a `.bak` extension.
+
+-prune  
+  Exclude directories from the search. Used with `-o` (or) to combine with other tests.
+
+  Example:  
+  # find /home/user -name "temp" -prune -o -name "*.txt" -print`  
+  Excludes the `temp` directory from the search while finding `.txt` files.
+
+## EXIT STATUS
+- **0** – Success
+- **1** – Syntax error or invalid argument
+- **2** – Invalid usage or failure
+
+## EXAMPLES
+
+1. Find all `.jpg` files in `/home/user` and its subdirectories:**
+
+   
+   # find /home/user -name "*.jpg"
+   
+
+2. Find all empty files in `/tmp`:
+
+   
+   # find /tmp -type f -empty
+  
+
+3. Find and delete all `.tmp` files older than 30 days:
+
+   
+   # find /var/tmp -name "*.tmp" -mtime +30 -exec rm {} \;
+   
+
+4. Find all files that are larger than 10MB and list their sizes:
+
+   
+   # find / -size +10M -exec ls -lh {} \;
+   
+
+5. Find all directories in `/home/user` and count them:
+
+   
+   # find /home/user -type d | wc -l
+   
+
+## SEE ALSO
+**ls(1)**, **grep(1)**, **xargs(1)**
+
+## AUTHOR
+The `find` command was written by the GNU Project and is maintained by various contributors. For more detailed information, refer to the GNU `find` manual.
+
+---
+
+This manual page provides a comprehensive overview of the `find` command, its options, and practical examples of its usage.
