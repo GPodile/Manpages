@@ -1,0 +1,95 @@
+Certainly! Here’s the `ln` command manual formatted in plain text with highlighted headings and examples:
+
+---
+
+`ln` Command Manual
+
+**Overview**
+
+The `ln` command creates links to files or directories. There are two types of links:
+
+- Hard Links: Direct references to the same file data.
+- Symbolic Links (Symlinks): Shortcuts that point to a file or directory by path.
+
+**Syntax**
+
+`ln [OPTION]... TARGET [LINK_NAME]`
+
+**Hard Links**
+
+**Create a Hard Link**
+
+Use the command to create a hard link to an existing file.
+
+Example:
+
+    ln originalfile.txt linkfile.txt
+
+**Verify Hard Link**
+
+Check inodes to confirm that a hard link points to the same file data.
+
+Example:
+
+    ls -li originalfile.txt linkfile.txt
+
+**Symbolic Links**
+
+**Create a Symbolic Link**
+
+Use the command with the `-s` option to create a symbolic link to a file or directory.
+
+Example:
+
+    ln -s originalfile.txt symlinkfile.txt
+
+**Symlink to a Directory**
+
+You can create symbolic links to directories as well.
+
+Example:
+
+    ln -s /path/to/directory mydir_link
+
+**Absolute vs. Relative Paths**
+
+Create symbolic links using absolute or relative paths, depending on how you specify the target location.
+
+Examples:
+
+- Absolute Path:
+
+      ln -s /path/to/targetfile absolute_link
+
+- Relative Path:
+
+      ln -s ../targetfile relative_link
+
+**Verify Symlink**
+
+Check the symbolic link and its target to ensure it points to the correct location.
+
+Example:
+
+    ls -l symlinkfile.txt
+
+**Options**
+
+- `-f`: Force overwrite if the destination file exists.
+- `-i`: Prompt before overwriting an existing file.
+- `-n`: Treat the destination as a normal file.
+
+Example:
+
+    ln -sf originalfile.txt linkfile.txt
+
+**Notes**
+
+- Hard links cannot be created for directories, except for special entries like `.` and `..`.
+- Symbolic links can span different file systems.
+- Hard links keep the file data until all links are deleted.
+- Symbolic links will break if the target is deleted or moved.
+
+---
+
+This version provides a clear and straightforward manual for the `ln` command in plain text format.
