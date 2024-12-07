@@ -1,0 +1,121 @@
+USERADD(8)                   System Administration Commands                   USERADD(8)
+
+NAME
+       useradd - create a new user account on the system
+
+SYNOPSIS
+       useradd [OPTIONS] USERNAME
+
+DESCRIPTION
+       The useradd command creates new user accounts on the system. If no options are 
+       specified, the system will use default settings for the user's account.
+
+       By default, useradd creates the user's account with default configurations, 
+       but system administrators can customize user creation using a variety of 
+       options to set specific properties for the user.
+
+BASIC USAGE
+       To create a new user with default settings, use the following command:
+       
+           useradd <username>
+
+       Example:
+       
+           useradd john
+
+       This command creates a new user named "john" with default system settings, 
+       which include default group assignment, default home directory, and default 
+       shell (usually /bin/bash).
+
+OPTIONS
+       The following options allow customization of the user's account during creation:
+
+       -g <groupname>
+              Specifies the group to which the user will belong. This group must exist 
+              on the system before using this option.
+
+              Example:
+              
+                  useradd -g developers john
+
+              This adds the user "john" to the existing "developers" group.
+
+       -s <shell>
+              Specifies the login shell for the new user. The shell must be available 
+              on the system (e.g., /bin/bash, /bin/zsh, /bin/sh).
+
+              Example:
+              
+                  useradd -s /bin/zsh john
+
+              This sets the login shell for the user "john" to Zsh (/bin/zsh).
+
+       -m
+              Creates a new home directory for the user in /home/<username>. Without 
+              this option, no home directory will be created for the user.
+
+              Example:
+              
+                  useradd -m john
+
+              This creates a new home directory at /home/john for the user "john".
+
+       -d <home directory path>
+              Specifies a custom path for the user's home directory. This option 
+              overrides the default home directory location (/home/<username>).
+
+              Example:
+              
+                  useradd -d /custom/path/john -m john
+
+              This creates a home directory for "john" at /custom/path/john.
+
+       -c <user description>
+              Sets a comment (also called GECOS information) for the user. This is 
+              typically used to store the user's full name or a short description.
+
+              Example:
+              
+                  useradd -c "John Doe - Web Developer" john
+
+              This adds the comment "John Doe - Web Developer" to the user "john".
+
+ADVANCED USAGE
+       To create a more customized user with a combination of options, use the following 
+       format:
+
+           useradd -g <groupname> -s <shell> -c <user description> -m -d <home directory path> <username>
+
+       Example:
+       
+           useradd -g developers -s /bin/bash -c "John Doe - Senior Developer" -m -d /projects/john john
+
+       This command creates the user "john" with the following properties:
+       - Group: "developers"
+       - Shell: /bin/bash
+       - Description: "John Doe - Senior Developer"
+       - Home directory: /projects/john (created if it does not exist)
+
+FILES
+       /etc/passwd
+              Contains user account information.
+
+       /etc/shadow
+              Contains encrypted password information for user accounts.
+
+       /etc/group
+              Contains information about groups and their members.
+
+EXIT STATUS
+       The useradd command returns 0 if successful. If an error occurs, a non-zero 
+       exit status is returned.
+
+SEE ALSO
+       userdel(8), usermod(8), passwd(1), groupadd(8)
+
+AUTHOR
+       Written by the Linux community.
+
+REPORTING BUGS
+       Report bugs to the Linux community or your system administrator.
+
