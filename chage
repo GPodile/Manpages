@@ -1,0 +1,126 @@
+The `chage` command is used to manage password expiration and aging policies for user accounts in Linux. Below is a detailed explanation of the options available with `chage` and examples for each.
+
+
+
+ `chage` - Change user password aging
+
+The `chage` command is used to change the password expiration information for user accounts. You can set various parameters, such as the minimum number of days between password changes, maximum number of days before a password expires, and the number of days of warning before the password expires.
+
+Syntax
+
+```
+chage [options] <username>
+```
+
+Description of Options:
+
+1. -l (List):
+   - This option lists the current password aging information for a given user.
+   
+   **Example:**
+   ```
+   sudo chage -l babubutt
+   ```
+
+   Output:
+   ```
+   Last password change                                    : 2023-01-01
+   Password expires                                        : 2023-04-01
+   Password inactive                                       : 2023-05-01
+   Account expires                                         : never
+   Minimum number of days between password change          : 5
+   Maximum number of days between password change          : 90
+   Number of days of warning before password expires       : 7
+   ```
+
+2. `-m <days>` (Minimum days between password changes)**:
+   - This option sets the minimum number of days between password changes. A user cannot change their password until the specified number of days has passed since the last change.
+   
+   Example:
+   ```
+   sudo chage -m 7 babubutt
+   ```
+   This will set the minimum days between password changes for `babubutt` to 7 days.
+
+3. -M <days> (Maximum days before password expires)**:
+   - This option sets the maximum number of days a password is valid before it expires. After this period, the user will be required to change their password.
+   
+   Example:
+   ```
+   sudo chage -M 30 babubutt
+   ```
+   This sets the maximum number of days before `babubutt`'s password expires to 30 days.
+
+4. -W <days> (Warning period before password expiration)**:
+   - This option sets the number of days in advance that the user will be warned before their password expires. For example, if the warning period is 7 days, the user will be notified 7 days before their password expires.
+   
+   **Example:**
+   ```
+   sudo chage -W 7 babubutt
+   ```
+   This sets the warning period to 7 days before the password expires.
+
+5. -I <days> (Inactive period after password expires)**:
+   - This option sets the number of days after the password has expired before the user’s account is locked. Once the inactive period is over, the account will be disabled, and the user cannot log in.
+   
+   Example:
+   ```
+   sudo chage -I 10 babubutt
+   ```
+   This sets the account to be locked 10 days after the password expires.
+
+6. -E <date> (Account expiration date)**:
+   - This option sets an expiration date for the user account. After this date, the account will be disabled, and the user will no longer be able to log in.
+   
+   The date should be in the format `YYYY-MM-DD`.
+   
+   Example:
+   ```
+   sudo chage -E 2024-12-31 babubutt
+   ```
+   This will expire `babubutt`'s account on December 31, 2024.
+
+7. -h (No output):
+   - This option suppresses all output from the command. This is useful if you do not want to see any output but want to change the password aging settings.
+
+   Example:
+   ```
+   sudo chage -h babubutt
+   ```
+
+8. -d <days>` (Last password change date)**:
+   - This option sets the date on which the user last changed their password. The date is specified in the number of days since January 1, 1970 (the Unix epoch). This can be used to simulate a password change.
+
+   **Example:**
+   ```
+   sudo chage -d 20064 babubutt
+   ```
+   This sets the last password change for `babubutt` to 20064 days since the Unix epoch.
+
+---
+
+Example of `/etc/shadow` Entry
+
+After running the command `grep <username> /etc/shadow`, the output for a user will look something like this:
+
+```
+babubutt:$y$j9T$XfhVCvxiuANKLSQgnJz8W.$cS4.vV3WwBoLFPOoWC1lnH7xJco.T9MDOaYwnt4VyeB:20064:0:99999:7::: 
+```
+
+Here’s the breakdown of the fields:
+
+1 .babubutt` - The username.
+2. $y$j9T$XfhVCvxiuANKLSQgnJz8W... - The encrypted password.
+3. 20064 - The last day the password was changed (number of days since January 1, 1970).
+4. 0 - The minimum number of days before the user can change the password (0 means no restriction).
+5. 99999 - The maximum number of days before the password expires (99999 means the password will never expire unless specified).
+6. 7 - The warning period before password expiration in days (7 means the user will be warned 7 days before expiration).
+7. :* - Inactive period and account expiration fields, both of which are empty in this example, meaning the account does not have a set expiration or inactivity period.
+
+---
+
+ Conclusion
+
+The `chage` command provides a comprehensive way to manage password aging, expiration, and user account policies. By setting the appropriate options, you can enforce security policies like requiring users to change their passwords regularly and alert them before their passwords expire.
+
+If you need more details on any specific option, you can always refer to the `man` page using:
